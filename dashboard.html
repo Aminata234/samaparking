@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAMA PARKING - Dashboard</title>
+
+    <!-- Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #111827;      /* Bleu nuit */
+            --secondary-color: #BF0000;    /* Rouge principal */
+            --tertiary-color: #DC2626;     /* Rouge secondaire */
+            --border-color: rgba(17, 24, 39, 0.1); /* Contours gris foncé transparent */
+            --text-color: #111827;         /* Texte noir */
+
+            --bg-main: #F9FAFB;            /* Fond principal #F9FAFB */
+            --input-bg: rgba(17, 24, 39, 0.03);
+            --card-bg: #FFFFFF;            /* Cartes blanches */
+            --separator-color: rgba(17, 24, 39, 0.15);
+            --placeholder-color: rgba(17, 24, 39, 0.5);
+
+            /* Tailles */
+            --fs-xs: 11px;
+            --fs-sm: 13px;
+            --fs-md: 15px;
+            --fs-lg: 18px;
+
+            /* Poids */
+            --fw-light: 300;
+            --fw-regular: 400;
+            --fw-medium: 500;
+            --fw-semibold: 600;
+            --fw-bold: 700;
+
+            /* Bordures */
+            --border-radius-sm: 8px;
+            --border-radius-md: 12px;
+
+            /* Espacements */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-color);
+            font-family: 'Montserrat', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            display: flex;
+            min-height: 100vh;
+            font-size: var(--fs-md);
+            font-weight: var(--fw-regular);
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 260px;
+            border-right: 1px solid var(--border-color);
+            background: var(--card-bg);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            padding: var(--spacing-lg);
+            box-shadow: 2px 0 8px rgba(0,0,0,0.04);
+        }
+
+        .logo-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .logo-section h1 {
+            font-size: var(--fs-lg);
+            font-weight: var(--fw-bold);
+            color: var(--text-color);
+            letter-spacing: -0.5px;
+        }
+
+        .logo-section span {
+            font-size: var(--fs-xs);
+            color: var(--placeholder-color);
+            font-weight: var(--fw-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-menu {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            border-radius: var(--border-radius-sm);
+            color: var(--placeholder-color);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            font-size: var(--fs-sm);
+            font-weight: var(--fw-medium);
+        }
+
+        .menu-item i {
+            width: 20px;
+            font-size: var(--fs-md);
+        }
+
+        .menu-item:hover {
+            background-color: var(--input-bg);
+            color: var(--text-color);
+        }
+
+        .menu-item.active {
+            background-color: rgba(191, 0, 0, 0.08);
+            color: var(--secondary-color);
+            border-left: 3px solid var(--secondary-color);
+            font-weight: var(--fw-semibold);
+        }
+
+        .logout-btn {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            color: var(--text-color);
+            font-size: var(--fs-sm);
+            font-weight: var(--fw-semibold);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .logout-btn:hover {
+            background: rgba(191, 0, 0, 0.08);
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: var(--spacing-xl);
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+            max-width: 1600px;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .topbar-title h2 {
+            font-size: var(--fs-lg);
+            font-weight: var(--fw-bold);
+            color: var(--text-color);
+        }
+
+        .topbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: var(--spacing-md);
+            color: var(--placeholder-color);
+            font-size: var(--fs-sm);
+        }
+
+        .search-box input {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 36px;
+            color: var(--text-color);
+            font-size: var(--fs-sm);
+            font-family: inherit;
+            width: 240px;
+        }
+
+        .search-box input::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(191, 0, 0, 0.1);
+        }
+
+        .icon-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .icon-btn:hover {
+            background: rgba(191, 0, 0, 0.08);
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        .profile {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+        }
+
+        .profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .stat-card h4 {
+            font-size: var(--fs-sm);
+            font-weight: var(--fw-medium);
+            color: var(--placeholder-color);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-card h2 {
+            font-size: var(--fs-lg);
+            font-weight: var(--fw-bold);
+            color: var(--text-color);
+        }
+
+        /* INFO GRID */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-md);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .info-card h4 {
+            font-size: var(--fs-xs);
+            font-weight: var(--fw-medium);
+            color: var(--placeholder-color);
+            margin-bottom: var(--spacing-sm);
+            text-transform: uppercase;
+        }
+
+        .info-card h2 {
+            font-size: var(--fs-md);
+            font-weight: var(--fw-semibold);
+            color: var(--text-color);
+        }
+
+        .info-card.alert {
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .info-card.alert h2 {
+            color: var(--tertiary-color);
+        }
+
+        /* DASHBOARD SECTION */
+        .dashboard-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 1px solid var(--separator-color);
+        }
+
+        .section-header h3 {
+            font-size: var(--fs-md);
+            font-weight: var(--fw-semibold);
+            color: var(--text-color);
+        }
+
+        .btn-primary {
+            background: var(--secondary-color);
+            color: #FFFFFF;
+            border: none;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--fs-sm);
+            font-weight: var(--fw-semibold);
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.2s;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: var(--input-bg);
+        }
+
+        th {
+            padding: var(--spacing-md);
+            text-align: left;
+            font-size: var(--fs-sm);
+            font-weight: var(--fw-semibold);
+            color: var(--placeholder-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: var(--spacing-md);
+            font-size: var(--fs-sm);
+            color: var(--text-color);
+            border-bottom: 1px solid var(--separator-color);
+        }
+
+        tbody tr:hover {
+            background: var(--input-bg);
+        }
+
+        /* ANALYTICS GRID */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .chart-card h3 {
+            font-size: var(--fs-md);
+            font-weight: var(--fw-semibold);
+            color: var(--text-color);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .chart-card canvas {
+            width: 100% !important;
+            max-height: 300px;
+        }
+
+        /* ACTIVITY LIST */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius-sm);
+        }
+
+        .activity-item i {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(191, 0, 0, 0.1);
+            color: var(--secondary-color);
+            border-radius: var(--border-radius-sm);
+            font-size: var(--fs-md);
+        }
+
+        .activity-item div {
+            flex: 1;
+        }
+
+        .activity-item h4 {
+            font-size: var(--fs-sm);
+            font-weight: var(--fw-semibold);
+            color: var(--text-color);
+            margin-bottom: 2px;
+        }
+
+        .activity-item p {
+            font-size: var(--fs-xs);
+            color: var(--placeholder-color);
+        }
+
+        .activity-item span {
+            font-size: var(--fs-xs);
+            color: var(--placeholder-color);
+            font-weight: var(--fw-medium);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .topbar-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo-section">
+            <h1>SAMA PARKING</h1>
+            <span>Fleet Management</span>
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="#" class="menu-item active">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-car"></i>
+                <span>Véhicules</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Réservations</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-users"></i>
+                <span>Clients</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <span>Maintenance</span>
+            </a>
+
+            <a href="#" class="menu-item">
+                <i class="fa-solid fa-money-bill-wave"></i>
+                <span>Revenus</span>
+            </a>
+
+        </nav>
+
+        <button class="logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Déconnexion
+        </button>
+
+    </aside>
+
+    <!-- CONTENU -->
+    <main class="main-content">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div class="topbar-title">
+                <h2>Tableau de Bord</h2>
+            </div>
+
+            <div class="topbar-actions">
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Rechercher...">
+                </div>
+
+                <button class="icon-btn">
+                    <i class="fa-solid fa-bell"></i>
+                </button>
+
+                <button class="icon-btn">
+                    <i class="fa-solid fa-gear"></i>
+                </button>
+
+                <div class="profile">
+                    <img src="images/admin.jpg" alt="Admin">
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- STATISTIQUES -->
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <h4>Véhicules Totaux</h4>
+                <h2 id="totalVehicules">150</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>SUV</h4>
+                <h2 id="totalSUV">45</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>Berlines</h4>
+                <h2 id="totalBerlines">60</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>Pick-up</h4>
+                <h2 id="totalPickup">25</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>Disponibles</h4>
+                <h2 id="vehiculesDisponibles">90</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>Loués</h4>
+                <h2 id="vehiculesLoues">40</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>Maintenance</h4>
+                <h2 id="vehiculesMaintenance">20</h2>
+            </div>
+
+            <div class="stat-card">
+                <h4>Réservations du Jour</h4>
+                <h2 id="reservationsJour">18</h2>
+            </div>
+
+        </section>
+
+        <!-- INFOS SUPPLEMENTAIRES -->
+        <section class="info-grid">
+
+            <div class="info-card">
+                <h4>Clients Inscrits</h4>
+                <h2>320</h2>
+            </div>
+
+            <div class="info-card">
+                <h4>Revenus Journaliers</h4>
+                <h2>275 000 FCFA</h2>
+            </div>
+
+            <div class="info-card">
+                <h4>Revenus Mensuels</h4>
+                <h2>8 750 000 FCFA</h2>
+            </div>
+
+            <div class="info-card">
+                <h4>Places Disponibles</h4>
+                <h2>120</h2>
+            </div>
+
+            <div class="info-card">
+                <h4>Places Occupées</h4>
+                <h2>380</h2>
+            </div>
+
+            <div class="info-card alert">
+                <h4>Alertes Maintenance</h4>
+                <h2>5</h2>
+            </div>
+
+        </section>
+
+        <!-- RESERVATIONS -->
+        <section class="dashboard-section">
+
+            <div class="section-header">
+                <h3>Réservations Récentes</h3>
+
+                <div class="section-actions">
+                    <button class="btn-primary">
+                        Nouvelle Réservation
+                    </button>
+                </div>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Client</th>
+                        <th>Véhicule</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Prix</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="reservationTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- MAINTENANCE -->
+        <section class="dashboard-section">
+
+            <div class="section-header">
+                <h3>Véhicules en Maintenance</h3>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Véhicule</th>
+                        <th>Immatriculation</th>
+                        <th>Panne</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="maintenanceTable">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- GRAPHIQUES -->
+        <section class="analytics-grid">
+
+            <div class="chart-card">
+                <h3>Revenus</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+
+            <div class="chart-card">
+                <h3>Taux d'Occupation</h3>
+                <canvas id="occupationChart"></canvas>
+            </div>
+
+        </section>
+
+        <!-- ACTIVITES -->
+        <section class="dashboard-section">
+
+            <div class="section-header">
+                <h3>Historique Récent</h3>
+            </div>
+
+            <div class="activity-list">
+
+                <div class="activity-item">
+                    <i class="fa-solid fa-car"></i>
+                    <div>
+                        <h4>Nouvelle réservation</h4>
+                        <p>Toyota Prado réservée</p>
+                    </div>
+                    <span>5 min</span>
+                </div>
+
+                <div class="activity-item">
+                    <i class="fa-solid fa-screwdriver-wrench"></i>
+                    <div>
+                        <h4>Maintenance</h4>
+                        <p>Hyundai Tucson en atelier</p>
+                    </div>
+                    <span>20 min</span>
+                </div>
+
+                <div class="activity-item">
+                    <i class="fa-solid fa-money-bill-wave"></i>
+                    <div>
+                        <h4>Paiement reçu</h4>
+                        <p>45 000 FCFA encaissés</p>
+                    </div>
+                    <span>45 min</span>
+                </div>
+
+                <div class="activity-item">
+                    <i class="fa-solid fa-user-plus"></i>
+                    <div>
+                        <h4>Nouveau client</h4>
+                        <p>Mamadou Fall a créé un compte</p>
+                    </div>
+                    <span>1 heure</span>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script>
+        /* =========================
+           PROTECTION : ADMIN UNIQUEMENT
+        ========================= */
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser || currentUser.role !== "admin") {
+            window.location.href = "index.html";
+        }
+
+        /* =========================
+           DECONNEXION
+        ========================= */
+        document.querySelector('.logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        });
+    </script>
+
+</body>
+</html>

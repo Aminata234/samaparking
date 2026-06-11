@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "fullname": "Administrateur",
+      "phone": "770000000",
+      "email": "admin@samaparking.com",
+      "password": "admin123",
+      "role": "admin"
+    },
+    {
+      "fullname": "Client Test",
+      "phone": "771111111",
+      "email": "client@samaparking.com",
+      "password": "client123",
+      "role": "client"
+    }
+  ]
+}

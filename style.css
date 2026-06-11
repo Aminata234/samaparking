@@ -1,0 +1,297 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #111827;      /* Bleu nuit */
+    --secondary-color: #BF0000;    /* Rouge principal */
+    --tertiary-color: #DC2626;     /* Rouge secondaire */
+    --border-color: rgba(255, 255, 255, 0.2); /* Blanc contours transparent */
+    --text-color: #F9FAFB;         /* Texte blanc */
+
+    --input-bg: rgba(255, 255, 255, 0.03);
+    --card-bg: rgba(10, 15, 30, 0.75); /* Légèrement assombri pour coller à l'image */
+    --separator-color: rgba(249, 250, 251, 0.30);
+    --placeholder-color: rgba(249, 250, 251, 0.35);
+
+    /* Tailles */
+    --fs-xs: 11px;
+    --fs-sm: 13px;
+    --fs-md: 15px;
+    --fs-lg: 18px;
+
+    /* Poids */
+    --fw-light: 300;
+    --fw-regular: 400;
+    --fw-medium: 500;
+    --fw-semibold: 600;
+    --fw-bold: 700;
+
+    /* Bordures */
+    --border-radius-sm: 8px;
+    --border-radius-md: 12px;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('Rectangle24.png') no-repeat center center/cover;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Boîte Principale */
+.card {
+    color: var(--text-color);
+    width: 100%;
+    max-width: 620px; /* Ajusté pour correspondre aux proportions de l'image */
+    background-color: var(--card-bg);
+    backdrop-filter: blur(16px); /* Effet de flou arrière-plan arrière la carte */
+    border-radius: var(--border-radius-md);
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+.card-I{
+    color: var(--text-color);
+    width: 100%;
+    max-width: 620px; /* Ajusté pour correspondre aux proportions de l'image */
+    background-color: var(--card-bg);
+    backdrop-filter: blur(16px); /* Effet de flou arrière-plan arrière la carte */
+    border-radius: var(--border-radius-md);
+    padding: 50px 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+/* Sélection Client / Administrateur */
+.role-selection {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 45px;
+}
+
+.role-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.role-item i {
+    font-size: 22px;
+}
+
+.role-item span {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 1px;
+}
+
+.role-item.active {
+    opacity: 1;
+}
+
+/* Formulaire */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.input-group label {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    letter-spacing: 1px;
+    color: rgba(249, 250, 251, 0.7);
+}
+/* Modifie cette partie dans ton fichier style.css */
+
+.input-group input {
+    width: 100%;
+    height: 60px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 0 20px;
+    color: var(--text-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--fs-sm);
+    letter-spacing: 0.5px;
+    outline: none;
+    /* La transition permet d'adoucir l'apparition du box-shadow */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; 
+}
+
+/* L'effet magique quand on clique (focus) dans le champ */
+.input-group input:focus {
+    border-color: var(--secondary-color);
+    /* 0 0 10px donne un flou de 10px tout autour, et le rgba ajoute 35% d'opacité */
+    box-shadow: 0 0 12px rgba(161, 0, 0, 0.35);
+    border: 1px solid var(--secondary-color);
+}
+.input-group input::placeholder {
+    color: var(--placeholder-color);
+}
+
+.input-group input:focus {
+    border-color: rgba(255, 255, 255, 0.6);
+    border: 1px solid var(--secondary-color);
+}
+
+/* Wrapper spécifique pour le mot de passe (icône œil) */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 55px;
+    letter-spacing: 3px; /* Pour faire de vrais gros points de mot de passe */
+}
+
+.eye-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--placeholder-color);
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.eye-icon:hover {
+    color: var(--text-color);
+}
+
+/* Bouton Se Connecter */
+.btn-submit {
+    width: 100%;
+    height: 54px;
+    background-color: var(--secondary-color);
+    border: none;
+    border-radius: 4px; /* Bordure très légèrement arrondie comme sur l'image */
+    color: var(--text-color);
+    font-family: 'Montserrat', sans-serif;
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-bold);
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+    background-color: var(--tertiary-color);
+}
+
+/* Séparateur "OU CONTINUER AVEC" */
+/* .separator {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid var(--separator-color);
+    line-height: 0.1em;
+    margin: 35px 0;
+}
+
+.separator span {
+    background: #0d1322; 
+    padding: 0 15px;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    color: var(--placeholder-color);
+    letter-spacing: 1px;
+} */
+
+.separator {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    margin: 35px 0;
+}
+
+/* On crée la ligne proprement sans écraser les hauteurs de ligne */
+.separator::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--separator-color);
+    z-index: 1;
+}
+
+.separator span {
+    position: relative;
+    z-index: 2;
+    background: #0d1322; /* Même couleur que le fond de ta carte */
+    padding: 0 15px;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-medium);
+    color: var(--placeholder-color);
+    letter-spacing: 1px;
+}
+
+/* Bouton Google */
+.btn-google {
+    width: 160px;
+    height: 50px;
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-color);
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    margin-bottom: 35px;
+}
+
+.btn-google:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Lien Créer un compte */
+.create-account {
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    letter-spacing: 1px;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.create-account:hover {
+    opacity: 1;
+}

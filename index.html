@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <title>SAMA PARKING-connexion</title>
+
+</head>
+ <body>
+    <div class="container">
+
+    <!-- CONNEXION -->
+
+    <div class="card">
+
+        <div class="role-selection">
+
+            <div class="role-item active">
+                <i class="fa-solid fa-user"></i>
+                <span>CLIENT</span>
+            </div>
+
+            <div class="role-item">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>ADMINISTRATEUR</span>
+            </div>
+
+        </div>
+
+        <form id="login-form">
+
+            <div class="input-group">
+                <label for="login-email">E-MAIL PROFESSIONNEL</label>
+                <input
+                    type="email"
+                    id="login-email"
+                    placeholder="samaparking@gmail.com"
+                    required>
+            </div>
+
+            <div class="input-group">
+
+                <label for="login-password">MOT DE PASSE</label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="login-password"
+                        placeholder="********************"
+                        required>
+
+                    <i class="fa-regular fa-eye eye-icon"></i>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-submit">
+                SE CONNECTER
+            </button>
+
+        </form>
+
+        <div class="separator">
+            <span>OU CONTINUER AVEC</span>
+        </div>
+
+        <button class="btn-google">
+            <i class="fa-brands fa-google"></i>
+        </button>
+
+        <a href="#" class="create-account">
+            CRÉER UN COMPTE
+        </a>
+
+    </div>
+
+    <!-- INSCRIPTION -->
+
+    <div class="card-I hidden">
+
+        <h2 class="form-title">
+            Créer un compte
+        </h2>
+
+        <form id="register-form">
+
+            <div class="input-row">
+
+                <div class="input-group">
+
+                    <label for="fullname">
+                        NOM COMPLET
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullname"
+                        placeholder="Abdou"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="phone">
+                        TÉLÉPHONE
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="770000000"
+                        required>
+
+                </div>
+
+            </div>
+
+            <div class="input-group full-width">
+
+                <label for="register-email">
+                    EMAIL PROFESSIONNEL
+                </label>
+
+                <input
+                    type="email"
+                    id="register-email"
+                    placeholder="abdou77@gmail.com"
+                    required>
+
+            </div>
+
+            <div class="input-row">
+
+                <div class="input-group">
+
+                    <label for="register-password">
+                        MOT DE PASSE
+                    </label>
+
+                    <input
+                        type="password"
+                        id="register-password"
+                        placeholder="*********"
+                        required>
+
+                </div>
+
+                <div class="input-group">
+
+                    <label for="confirm-password">
+                        CONFIRMATION
+                    </label>
+
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        placeholder="*********"
+                        required>
+
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn-submit">
+                CRÉER UN COMPTE
+            </button>
+
+        </form>
+
+        <div class="separator">
+            <span class="back-login">
+                Connectez-vous
+            </span>
+        </div>
+
+    </div>
+
+</div>
+    
+   
+        <script src="script.js"></script>
+    </body>
+</html>
