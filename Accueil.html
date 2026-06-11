@@ -1,11 +1,847 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=zirk.html">
-    <title>SAMA PARKING</title>
+
+<html lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sama Parking - Excellence en gestion de flotte</title>
+<!-- Google Fonts: Hanken Grotesk from Design System -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+        :root {
+            /* Colors from Automotive Excellence Design System */
+            --primary: #d31011;
+            --surface: #f9f9f9;
+            --surface-dim: #dadada;
+            --surface-container-low: #f3f3f3;
+            --surface-container-lowest: #ffffff;
+            --text-main: #1a1a1a;
+            --text-muted: #666666;
+            --white: #ffffff;
+            --black: #000000;
+            --overlay: rgba(0, 0, 0, 0.4);
+            
+            /* UI States */
+            --status-available: #22c55e;
+            --status-rented: #f97316;
+            --status-maintenance: #ef4444;
+            --status-info: #3b82f6;
+
+            /* Borders & Roundness */
+            --radius: 4px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: var(--white);
+            color: var(--text-main);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background-color: var(--white);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            height: 80px;
+        }
+
+        .header-content {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo img {
+            height: 250px;
+            object-fit: contain;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 2rem;
+            }
+        }
+
+        .nav-links a {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #4b5563;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .auth-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-outline {
+            border: 1px solid #d1d5db;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .btn-outline:hover {
+            background-color: #f9fafb;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 650px;
+            display: flex;
+            align-items: center;
+            margin-top: 80px;
+            color: var(--white);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .hero-bg img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: var(--overlay);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .hero h1 { font-size: 3.5rem; }
+        }
+
+        .hero p {
+            font-size: 1.125rem;
+            color: #e5e7eb;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .btn-hero-solid {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-hero-outline {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            padding: 0.75rem 1.5rem;
+            font-weight: 700;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-hero-outline:hover {
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        /* Sections General */
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .title-underline {
+            height: 4px;
+            width: 64px;
+            background-color: var(--primary);
+            margin: 0 auto;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .service-card {
+            padding: 2rem;
+            background-color: var(--white);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            border-bottom: 4px solid transparent;
+        }
+
+        .service-icon {
+            font-size: 1.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.25;
+        }
+
+        .service-card p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .service-badge {
+            font-size: 10px;
+            font-weight: 700;
+            border: 1px solid;
+            padding: 0.25rem 0.5rem;
+            text-transform: uppercase;
+            align-self: flex-start;
+        }
+
+        /* Fleet Grid */
+        .bg-gray-light { background-color: var(--surface); }
+
+        .fleet-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .fleet-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .car-card {
+            background-color: var(--white);
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-img {
+            height: 224px;
+            background-color: #e5e7eb;
+        }
+
+        .car-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .car-info {
+            padding: 1.5rem;
+            border-left: 4px solid transparent;
+        }
+
+        .car-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .car-header h4 { font-weight: 700; }
+
+        .car-price {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .car-desc {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-pill {
+            display: inline-block;
+            color: var(--white);
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 2px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* Pricing Grid */
+        .pricing-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            max-width: 1000px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .pricing-container { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .pricing-plan {
+            padding: 2.5rem;
+            border: 1px solid #e5e7eb;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            height: 450px;
+            background-color: var(--white);
+        }
+
+        .pricing-plan.featured {
+            height: 500px;
+            border: 2px solid var(--status-rented);
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .featured-tag {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--status-rented);
+            color: var(--white);
+            font-size: 10px;
+            font-weight: 700;
+            padding: 0.25rem 1rem;
+            text-transform: uppercase;
+        }
+
+        .plan-name {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+
+        .plan-price {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .plan-features {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: auto;
+        }
+
+        .plan-features li { margin-bottom: 1rem; }
+
+        .btn-plan {
+            margin-top: 2rem;
+            border: 1px solid #9ca3af;
+            background: transparent;
+            padding: 0.5rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-plan:hover { background-color: #f3f4f6; }
+
+        .btn-plan-featured {
+            margin-top: 2rem;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 0.75rem;
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Contact & About */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .contact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .about-text { text-align: center; }
+
+        @media (min-width: 768px) {
+            .about-text { text-align: left; }
+        }
+
+        .about-text h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .about-logo {
+            display: flex;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .about-logo { justify-content: flex-start; }
+        }
+
+        .about-logo img {
+            height: 64px;
+            filter: grayscale(1);
+            opacity: 0.8;
+        }
+
+        .contact-form-box {
+            background-color: #e5e7eb;
+            padding: 2rem;
+            border-radius: 2px;
+        }
+
+        .contact-form-box h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem;
+        }
+
+        .form-group { margin-bottom: 1rem; }
+
+        .form-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 0.25rem;
+        }
+
+        .form-input {
+            width: 100%;
+            border: 1px solid #d1d5db;
+            background-color: #f3f4f6;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #0f172a;
+            color: var(--white);
+            padding: 3rem 0;
+        }
+
+        .footer-top {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (min-width: 768px) {
+            .footer-top { flex-direction: row; }
+        }
+
+        .footer-logo {
+            width: 64px;
+            height: 48px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            font-style: italic;
+        }
+
+        .footer-email {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .social-links a:hover { color: var(--primary); transition: var(--transition); }
+
+        .footer-bottom {
+            border-top: 1px solid #1e293b;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirection vers <a href="zirk.html">l'accueil</a>...</p>
-</body>
-</html>
+<!-- MainHeader -->
+<header class="header" data-purpose="navigation-bar">
+<div class="container header-content">
+<!-- Logo -->
+<div class="logo" data-purpose="logo">
+<img alt="Sama Parking Logo" src="logo1.png"/>
+</div>
+<!-- Navigation Links -->
+<nav class="nav-links" data-purpose="nav-links">
+<a href="#services">Services</a>
+<a href="#flotte">Flotte</a>
+<a href="#tarifs">Tarifs</a>
+<a href="#a-propos">A propos</a>
+</nav>
+<!-- Action Buttons -->
+<div class="auth-actions" data-purpose="auth-actions">
+<a class="btn-outline" href="index.html">Connexion</a>
+<a class="btn-primary" href="index.html">Réservez maintenant</a>
+</div>
+</div>
+</header>
+<main>
+<!-- HeroSection -->
+<section class="hero" data-purpose="hero">
+<div class="hero-bg">
+<img alt="Hero Background" src="Rectangle2.png"/>
+<div class="hero-overlay"></div>
+</div>
+<div class="container hero-content">
+<h1>L'excellence opérationnelle pour votre flotte automobile</h1>
+<p>
+                    Gérez vos véhicules avec une précision chirurgicale. <br/>
+<span style="font-weight: 700;">SAMA PARKING</span> redéfinit la mobilité professionnelle à travers l'Afrique de l'Ouest.
+                </p>
+<div class="hero-btns">
+<button class="btn-hero-solid">Découvrir nos solutions</button>
+<button class="btn-hero-outline">Nous Contacter</button>
+</div>
+</div>
+</section>
+<!-- ServicesSection -->
+<section class="section-padding" data-purpose="services-listing" id="services">
+<div class="container">
+<div class="section-title">
+<h2>Services de Pointe</h2>
+<div class="title-underline"></div>
+</div>
+<div class="services-grid">
+<!-- Service Card 1 -->
+<div class="service-card" data-purpose="service-card" style="border-bottom-color: var(--status-info);">
+<div class="service-icon" style="color: var(--status-info);">📍</div>
+<h3>Localisation GPS en temps réel</h3>
+<p>Localisation précise de chaque unité pour une réactivité totale sur le terrain.</p>
+<span class="service-badge" style="color: var(--status-info); border-color: var(--status-info);">Optimisation</span>
+</div>
+<!-- Service Card 2 -->
+<div class="service-card" data-purpose="service-card" style="border-bottom-color: var(--status-rented);">
+<div class="service-icon" style="color: var(--status-rented);">🔧</div>
+<h3>Maintenance Prédictive</h3>
+<p>Anticipez les pannes avant qu'elles ne surviennent grâce à notre IA propriétaire.</p>
+<span class="service-badge" style="color: var(--status-rented); border-color: var(--status-rented);">Prévention</span>
+</div>
+<!-- Service Card 3 -->
+<div class="service-card" data-purpose="service-card" style="border-bottom-color: var(--status-available);">
+<div class="service-icon" style="color: var(--status-available);">📊</div>
+<h3>Analyses de Flotte</h3>
+<p>Visualisez vos KPI clés pour réduire vos coûts opérationnels de manière drastique.</p>
+<span class="service-badge" style="color: var(--status-available); border-color: var(--status-available);">Stratégie</span>
+</div>
+<!-- Service Card 4 -->
+<div class="service-card" data-purpose="service-card" style="border-bottom-color: var(--status-maintenance);">
+<div class="service-icon" style="color: var(--status-maintenance);">🛡️</div>
+<h3>Sécurité Maximale</h3>
+<p>Protocoles de protection avancés pour vos actifs les plus précieux, 24/7.</p>
+<span class="service-badge" style="color: var(--status-maintenance); border-color: var(--status-maintenance);">Securite</span>
+</div>
+</div>
+</div>
+</section>
+<!-- FleetSection -->
+<section class="section-padding bg-gray-light" data-purpose="fleet-display" id="flotte">
+<div class="container">
+<div class="section-title">
+<h2>Notre Flotte d'Excellence</h2>
+<div class="title-underline" style="margin-bottom: 1rem;"></div>
+<p style="color: var(--text-muted);">Des solutions adaptées à chaque besoin professionnel.</p>
+</div>
+<div class="fleet-grid">
+<!-- Car Card 1 -->
+<div class="car-card" data-purpose="car-card">
+<div class="car-img">
+<img alt="Berline" src="Rectangle8.png"/>
+</div>
+<div class="car-info" style="border-left-color: var(--status-available);">
+<div class="car-header">
+<h4>Berline Executive</h4>
+<span class="car-price">1500F/jour</span>
+</div>
+<p class="car-desc">Confort absolu et discrétion pour vos déplacements de direction.</p>
+<span class="status-pill" style="background-color: var(--status-available);">Disponible</span>
+</div>
+</div>
+<!-- Car Card 2 -->
+<div class="car-card" data-purpose="car-card">
+<div class="car-img">
+<img alt="Electrique" src="Rectangle9.png"/>
+</div>
+<div class="car-info" style="border-left-color: var(--status-rented);">
+<div class="car-header">
+<h4>Mobilité Électrique</h4>
+<span class="car-price">1500F/jour</span>
+</div>
+<p class="car-desc">Réduisez votre empreinte carbone avec notre gamme Tesla &amp; VE.</p>
+<span class="status-pill" style="background-color: var(--status-rented);">Loué</span>
+</div>
+</div>
+<!-- Car Card 3 -->
+<div class="car-card" data-purpose="car-card">
+<div class="car-img">
+<img alt="SUV" src="Rectangle10.png"/>
+</div>
+<div class="car-info" style="border-left-color: var(--status-maintenance);">
+<div class="car-header">
+<h4>SUV Premium</h4>
+<span class="car-price">1500F/jour</span>
+</div>
+<p class="car-desc">La polyvalence sans compromis sur le luxe et la sécurité.</p>
+<span class="status-pill" style="background-color: var(--status-maintenance);">Maintenance</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- PricingSection -->
+<section class="section-padding" data-purpose="pricing" id="tarifs">
+<div class="container">
+<div class="section-title">
+<h2>Une tarification transparente pour votre flotte</h2>
+<div class="title-underline"></div>
+</div>
+<div class="pricing-container">
+<!-- Plan 1 -->
+<div class="pricing-plan" data-purpose="pricing-plan">
+<span class="plan-name" style="color: var(--status-available);">Essentiel</span>
+<div class="plan-price">1500F/jour</div>
+<ul class="plan-features">
+<li>trajets urbains individuels</li>
+<li>Voyagez en 1er classe au juste prix.</li>
+</ul>
+<button class="btn-plan">Selectionner</button>
+</div>
+<!-- Plan 2 (Highlighted) -->
+<div class="pricing-plan featured" data-purpose="pricing-plan-featured">
+<div class="featured-tag">Recommandé</div>
+<span class="plan-name" style="color: var(--status-rented); margin-top: 1rem;">Business</span>
+<div class="plan-price">2500F/jour</div>
+<ul class="plan-features">
+<li>trajets urbains individuels</li>
+<li>Voyagez en 1er classe au juste prix.</li>
+</ul>
+<button class="btn-plan-featured">Reserver maintenant</button>
+</div>
+<!-- Plan 3 -->
+<div class="pricing-plan" data-purpose="pricing-plan">
+<span class="plan-name" style="color: #ea580c;">Entreprise</span>
+<div class="plan-price">5000F/jour</div>
+<ul class="plan-features">
+<li>trajets urbains individuels</li>
+<li>Voyagez en 1er classe au juste prix.</li>
+</ul>
+<button class="btn-plan">Contactez-nous</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ContactSection -->
+<section class="section-padding bg-gray-light" data-purpose="contact-and-about" id="a-propos">
+<div class="container">
+<div class="contact-grid">
+<!-- Text Content -->
+<div class="about-text">
+<h2>Redéfinir la mobilité en Afrique de l'Ouest.</h2>
+<p>
+                            Offrir une infrastructure de mobilité robuste, agile et durable pour soutenir la croissance des champions économiques de la région.
+                        </p>
+<div class="about-logo">
+<img alt="Logo Sama Parking Footer" src="logo1.png"/>
+</div>
+</div>
+<!-- Contact Form -->
+<div class="contact-form-box" data-purpose="contact-form">
+<h3>Contactez-nous</h3>
+<form action="#">
+<div class="form-group">
+<label class="form-label">Nom Complet</label>
+<input class="form-input" placeholder="MARIE NDIAYO" type="text"/>
+</div>
+<div class="form-group">
+<label class="form-label">Email Professionnel</label>
+<input class="form-input" placeholder="MARIE NDIAYO" type="email"/>
+</div>
+<div class="form-group">
+<label class="form-label">Entreprise</label>
+<input class="form-input" placeholder="MARIE NDIAYO" type="text"/>
+</div>
+<div class="form-group">
+<textarea class="form-input" placeholder="Parlez-nous de vos besoin" rows="4" style="resize: vertical;"></textarea>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- MainFooter -->
+<footer class="footer" data-purpose="footer">
+<div class="container">
+<div class="footer-top">
+<!-- Logo -->
+<div class="footer-logo">SP</div>
+<!-- Contact/Email -->
+<div class="footer-email">
+                    samaparking@social.com
+                </div>
+<!-- Social Icons -->
+<div class="social-links">
+<a href="#">𝕏</a>
+<a href="#">#</a>
+<a href="#"></a>
+<a href="#"></a>
+</div>
+</div>
+<div class="footer-bottom">
+                © 2026 SAMA PARKING. Tous droits réservés.
+            </div>
+</div>
+</footer>
+</body></html>
