@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (user.role === "admin") {
             window.location.href = "dashboard.html";
         } else {
-            window.location.href = "zirk.html";
+            window.location.href = "Accueil.html";
         }
     });
 
